@@ -1,4 +1,4 @@
-
+import matplotlib.pyplot as plt
 from Athlete import Athlete
 from BallPlayer import BallPlayer
 from Swimmer import Swimmer
@@ -11,6 +11,11 @@ h_counter = 0
 b_counter = 0
 f_counter = 0
 s_counter = 0
+Sal_h = 0
+Sal_s = 0
+Sal_ball = 0
+Sal_B = 0
+Sal_F = 0
 endorsments = {}
 goals_Scored = {}
 touch_downs = {}
@@ -20,24 +25,10 @@ print()
 def Menu():
     choice = input("1. Load File \n2. Print Stats \n3. Delete Athlete \n4. Save File \n5. Athlete Info \n6. Display Chart \n7. Exit\n")
     return choice
+def PieChartMenu():
+    pie_choice = input("1. Number of Athletes\n2. Number of Athletes specified\n3. Athletes Salaries\n4. Athletes Salaries specified\n5. Endoresments\n")
+    return pie_choice
 file2 = open(File_Name_2,"w")
-
-
-
-#
-# print("Statistics\n" + "-------------------")
-# Athlete.printStats(Athlete)
-# HockeyPlayer.printStats(HockeyPlayer)
-# BallPlayer.printStats(BallPlayer)
-# BasketballPlayer.printStats(BasketballPlayer)
-# FootballPlayer.printStats(FootballPlayer)
-# Swimmer.printStats(Swimmer)
-
-
-
-
-
-
 choice = "1"
 
 while choice !="7":
@@ -48,22 +39,22 @@ while choice !="7":
        file = open(File_Name+".txt","r")
 
        for line in file:
-           type = line.split(":")
-           individual = type[1].split(",")
+           typ = line.split(":")
+           individual = typ[1].split(",")
            a_counter +=1
-           if(type[0] == "HockeyPlayer"):
+           if(typ[0] == "HockeyPlayer"):
                athlete = HockeyPlayer.parse(HockeyPlayer,individual)
                athletes.append(athlete)
                h_counter +=1
-           elif(type[0] == "Swimmer"):
+           elif(typ[0] == "Swimmer"):
                athlete = Swimmer.parse(Swimmer,individual)
                athletes.append(athlete)
                s_counter += 1
-           elif(type[0] == "BasketballPlayer"):
+           elif(typ[0] == "BasketballPlayer"):
                 athlete = BasketballPlayer.parse(BasketballPlayer,individual)
                 athletes.append(athlete)
                 b_counter +=1
-           elif(type[0] == "FootballPlayer"):
+           elif(typ[0] == "FootballPlayer"):
                 athlete = FootballPlayer.parse(FootballPlayer,individual)
                 athletes.append(athlete)
                 f_counter +=1
@@ -130,7 +121,49 @@ while choice !="7":
                athlete.printEndorsement()
        print("Hello5")
    if (choice == "6"):
-       print("Hello6")
+       pie_choice = PieChartMenu()
+       if(pie_choice == "1"):
+        sizes = [h_counter,s_counter,(b_counter + f_counter)]
+        categories = ["HockeyPlayer","Swimmer","BallPlayer"]
+        plt.pie(sizes, labels = categories,autopct='%1.1f%%', startangle=90 )
+        plt.axis('equal')
+        plt.show()
+       if(pie_choice == "2"):
+           sizes = [h_counter, s_counter, f_counter,b_counter]
+           categories = ["HockeyPlayer", "Swimmer", "FootballPlayer","BasketballPlayer"]
+           plt.pie(sizes, labels=categories, autopct='%1.1f%%', startangle=90)
+           plt.axis('equal')
+           plt.show()
+       if(pie_choice == "3"):
+           Sal_h = 0
+           Sal_B = 0
+           Sal_ball = 0
+           Sal_F = 0
+           Sal_s = 0
+           for athlete in athletes:
+               if type(athlete) == HockeyPlayer:
+                   if athlete.salary != "null":
+                    Sal_h += float(athlete.salary)
+               if type(athlete) == Swimmer:
+                   if athlete.salary != "null":
+                    Sal_s += float(athlete.salary)
+               if type(athlete) == BasketballPlayer:
+                   if athlete.salary != "null":
+                    Sal_B += float(athlete.salary)
+               if type(athlete) == FootballPlayer:
+                   if athlete.salary !="null":
+                    Sal_F += float(athlete.salary)
+           average_sal = [Sal_h/h_counter, Sal_s/s_counter, (Sal_B + Sal_F)/(b_counter+f_counter)]
+           categories = ["HockeyPlayer", "Swimmer","BallPlayer"]
+           plt.pie(average_sal, labels=categories, autopct='%1.1f%%', startangle=90)
+           plt.axis('equal')
+           plt.show()
+           print("Hello3")
+       if(pie_choice == "4"):
+           print("Hello4")
+       if(pie_choice == "5"):
+           print("Hello5")
+
 if(choice == "7"):
     if safed == 1:
         option = input("You have yet to save the file so data may be lost do you still want to exit Y/N:")
