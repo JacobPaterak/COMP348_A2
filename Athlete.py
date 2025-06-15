@@ -6,8 +6,10 @@ class Athlete:
         self.age = age
         self.country = country
         self.salary = salary
+        Athlete.Amount_Of_Athletes += 1
+        print(f"Athlete '{self.name}', {self.age} created; total # of athletes {Athlete.Amount_Of_Athletes}.")
 
-        Athlete.Amount_Of_Athletes +=1
+
     def printStats(self):
         pass
     def printEndorsement(self):

@@ -16,9 +16,11 @@ class FootballPlayer(BallPlayer):
         self.passing_yards = passing_yards
 
         FootballPlayer.FootballPlayer_Amount +=1
+        print(
+            f"Football Player '{self.name}', {self.age} created; total # of football players {FootballPlayer.FootballPlayer_Amount}.")
 
     def printStats(self):
-        print(str(self.FootballPlayer_Amount) + " Football Players)")
+        print(self.stringify())
     def printEndorsement(self):
         if(self.endorsement != "null"):
          print(self.endorsement)
@@ -28,7 +30,9 @@ class FootballPlayer(BallPlayer):
         return self.touchdowns
     def stringify(self):
         return f"FootballPlayer:{safe_str(self.name)},{safe_str(self.age)},{safe_str(self.team_name)},{safe_str(self.jersey_number)},{safe_str(self.country)},{safe_str(self.salary)},{safe_str(self.endorsement)},{safe_str(self.touchdowns)},{safe_str(self.passing_yards)}"
-    def parse(self,text):
+
+    @staticmethod
+    def parse(text):
         elements = []
 
         for element in text:

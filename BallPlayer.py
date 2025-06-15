@@ -11,7 +11,7 @@ class BallPlayer(Athlete):
 
         BallPlayer.BallPlayer_Amount +=1
     def printStats(self):
-        print(str(self.BallPlayer_Amount) + " Ball Player ",end="")
+       pass
 
     def printEndorsement(self):
         pass

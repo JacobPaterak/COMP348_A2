@@ -16,14 +16,18 @@ class Swimmer(Athlete):
         self.personal_best_time = personal_best_time
 
         Swimmer.Swimmer_Amount +=1
+        print(f"Swimmer '{self.name}', {self.age} created; total # of swimmers {Swimmer.Swimmer_Amount}.")
     def printStats(self):
         print(str(self.Swimmer_Amount) + " Swimmers")
-
+    def printStats(self):
+        print(self.stringify())
     def stringify(self):
         return f"Swimmer: {safe_str(self.name)},{safe_str(self.age)},{safe_str(self.stroke_style)},{safe_str(self.country)},{safe_str(self.salary)},{safe_str(self.personal_best_time)}"
     def getE(self):
         pass
-    def parse(self,text):
+
+    @staticmethod
+    def parse(text):
         elements = []
 
         for element in text:
